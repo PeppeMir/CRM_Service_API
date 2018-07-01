@@ -59,7 +59,7 @@ Since the application is based on Spring-Boot, all the configurations are specif
 
 The application supports [Oauth 2.0](https://oauth.net/2/) protocol. All the performed requests must be authorized.
 
-As for OAuth2 specification, the authorization process can be performed with the request
+As for OAuth2 specification, the authorization process can be performed with the POST request
 
 ```
 http://localhost:[configured_server_port]/oauth/authorize
@@ -93,7 +93,7 @@ Finally a result like this one will be obtained
 { 
   "access_token"  : "1dcbf2a1-5739-4e9e-b0f6-429a743cfebe",
   "token_type"    : "bearer",
-  "expires_in"    : "120",
+  "expires_in"    : "[configured_expiration_seconds]",
   "scope" : "[configured_scope]",
 }
 ```
@@ -117,5 +117,29 @@ until its expiration, which will require the user to authenticate again
 
 Samples requests can be easily performed. for example, by using **Postman**, which can be used both as [Chrome extension](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop) or [Desktop app](https://www.getpostman.com/).
 
+### Example: use Postman to get all the users
 
+By assuming that the application is running on the local machine and is listening on the port ```8080```, let us prepare the ```GET``` request for the address ```http://localhost:8080/user/getAl```, and perform it by pressing the send button
 
+![ScreenShot](https://github.com/PeppeMir/CRM_Service_API/blob/master/readmeImages/0.PNG)
+
+As expected, the application first requires the authentication. To do so using OAuth 2.0, it is enough to switch the type in the authorization tab, and press the get new access token button.
+
+![ScreenShot](https://github.com/PeppeMir/CRM_Service_API/blob/master/readmeImages/1.PNG)
+
+A new window will appear, asking for several parameters. These parameters must be set to the one specified in the configuration of the application, as we have already seen above. 
+
+![ScreenShot](https://github.com/PeppeMir/CRM_Service_API/blob/master/readmeImages/2.PNG)
+
+When all the parameters have been successfully set, we can press the request token button. Despite from the name, Postman will perform both the authorization and token request.
+
+First you will require to insert username and password, then to approve the access to the resources under the configured scope.
+
+![ScreenShot](https://github.com/PeppeMir/CRM_Service_API/blob/master/readmeImages/345.png)
+
+At the end of the process, an access token will be returned, and can be used to perform the authenticated request that was denied before. As we can see in the next image, this time the application recognizes that we are authorized, and returns the list of all the users present in the system
+
+![ScreenShot](https://github.com/PeppeMir/CRM_Service_API/blob/master/readmeImages/6.PNG)
+
+Once obtained, the same token can be use in all the requests, until it expires.
+Please remember that, in addition to the authentication, users with role ADMIN have fully access to the API, but users with role USER only have access to the ```/customer``` part.
