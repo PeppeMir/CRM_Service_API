@@ -2,6 +2,11 @@
 
 The aim of this project is the development of a simple, secure REST API that can be easily used for CRM service purposes.
 
+The application stores users and customers. To each user is assigned a role, that can be either ADMIN or USER. All the users must be authenticated to have access to the API exposed by the server. 
+In particular, administrators have unlimited access, while simple users do not have access to the ```/user/**``` part, i.e. they cannot create and manipulate users. Customer can also upload a picture with .jpeg or .png format.
+
+The application starts with the two roles ADMIN and USER already present in the database, together with the admin user. 
+
 ## Deployment and run of the project
 
 If you want deploy and run the project on your local machine, continue reading this session. These manual steps can be simplified by checking out the project directly in your IDE.
@@ -28,6 +33,24 @@ mvn spring-boot:run
 ## Configuration
 
 Since the application is based on Spring-Boot, all the configurations are specified in the files ```application.properties``` and ```logback.xml```.
+
+### logback.xml
+
+With ```logback.xml``` we just configure the logging strategy, together with the text format of each line. Information about time, running thread, level and logging class have been added in addition to the logged message itself.
+
+Furthermore, a rolling policy has been defined for the logging on file: a new log file is generated everytime that either the current file reaches the size of 10MB or the end of the day is passed. This means that we will have files named ```log.2018-07-02.1.log```, ```log.2018-07-02.2.log```, ```log.2018-07-03.1.log```, etc. Last but not least, a maximum number of file is maintained in the LOGS folder, in order to avoid an excessive space usage on the disk.
+
+### application.properties
+
+With ```application.properties``` we mainly specify configurations needed to Spring-boot.
+
+In particular:
+
+- ```server.port``` specifies the listening port of the application;
+- ```logging.level.root``` specifies the general logging level of the application;
+- ```security.oauth2.*``` specify the parameters for the OAuth2 authentication (see next section);
+- ```spring.datasource.*``` specify the data source used by the application. In the given file, a MySQL server is configured;
+- ```spring.jpa.*``` specify the JPA / Hibernate configuration, i.e. db schema operations (create-drop, update, ...), SQL dialect, etc.
 
 ## Endpoints
 
