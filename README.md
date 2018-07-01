@@ -31,62 +31,6 @@ Since the application is based on Spring-Boot, all the configurations are specif
 
 ## Endpoints
 
-### Security
-
-The application supports [Oauth 2.0](https://oauth.net/2/) protocol. All the performed requests must be authorized.
-
-As for OAuth2 specification, the authorization process can be performed with the request
-
-```
-http://localhost:[configured_server_port]/oauth/authorize
-```
-
-by specifying the following parameters
-
-- response_type=**code**
-- client_id=[configure_client_id]
-- scope=[configured_scope]
-- redirect_uri=https://xxxxxx.xxx
-
-Once obtained an authorization **code**, a token can be request 
-
-```
-http://localhost:[configure_dserver__port]/oauth/token
-```
-
-by specifying the following parameters
-
-- client_id=[configure_client_id]
-- client_secret=[configured_client_secret]
-- grant_type=authorization_code
-- code=[code_obtained_from_authorization]
-
-and obtaining a result like this one:
-
-```
-{ 
-  "access_token"  : "1dcbf2a1-5739-4e9e-b0f6-429a743cfebe",
-  "token_type"    : "bearer",
-  "expires_in"    : "120",
-  "scope" : "[configured_scope]",
-}
-```
-
-The token can finally be used to perform authorized requests
-
-```
-http://localhost:[configured_server_port]/customer/getAll?access_token=1dcbf2a1-5739-4e9e-b0f6-429a743cfebe
-```
-
-until its expiration, which will require the user to authenticate again
-
-```
-{
-    "error": "invalid_token",
-    "error_description": "Access token expired: 1dcbf2a1-5739-4e9e-b0f6-429a743cfebe"
-}
-```
-
 ### Customers
 
 | Method | Url | Decription |
@@ -111,9 +55,67 @@ until its expiration, which will require the user to authenticate again
 | DELETE | /user/delete/{id}        | Delete the user with the specified id |
 
 
-[share postman here]
+### Security
 
-Samples of requests to the API:
+The application supports [Oauth 2.0](https://oauth.net/2/) protocol. All the performed requests must be authorized.
+
+As for OAuth2 specification, the authorization process can be performed with the request
+
+```
+http://localhost:[configured_server_port]/oauth/authorize
+```
+
+by specifying the following parameters
+
+- **response_type=code**
+- client_id=[configure_client_id]
+- scope=[configured_scope]
+- redirect_uri=https://xxxxxx.xxx
+
+together with username and password in the prompted login page.
+
+Once authenticated and obtained an authorization code **[auth_code]**, a token can be request 
+
+```
+http://localhost:[configure_dserver__port]/oauth/token
+```
+
+by specifying the following parameters
+
+- client_id=[configure_client_id]
+- client_secret=[configured_client_secret]
+- grant_type=authorization_code
+- code=**[auth_code]**
+
+Finally a result like this one will be obtained
+
+```
+{ 
+  "access_token"  : "1dcbf2a1-5739-4e9e-b0f6-429a743cfebe",
+  "token_type"    : "bearer",
+  "expires_in"    : "120",
+  "scope" : "[configured_scope]",
+}
+```
+
+and the token can be used to perform authorized requests
+
+```
+http://localhost:[configured_server_port]/customer/getAll?access_token=1dcbf2a1-5739-4e9e-b0f6-429a743cfebe
+```
+
+until its expiration, which will require the user to authenticate again
+
+```
+{
+    "error": "invalid_token",
+    "error_description": "Access token expired: 1dcbf2a1-5739-4e9e-b0f6-429a743cfebe"
+}
+```
+
+## Example of requests
+
+Samples requests can be easily performed. for example, by using **Postman**, which can be used both as [Chrome extension](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop) or [Desktop app](https://www.getpostman.com/).
 
 
 
