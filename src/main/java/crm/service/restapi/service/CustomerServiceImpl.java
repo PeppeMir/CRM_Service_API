@@ -50,11 +50,11 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Optional<Customer> find(final long customerId) {
 
-        logger.info("Finding customer \"{}\"", customerId);
+        logger.info("Finding customer '{}'", customerId);
 
         final Customer customer = customerRepository.findOne(customerId);
         if (customer == null) {
-            logger.warn("Customer \"{}\" not found", customerId);
+            logger.warn("Customer '{}' not found", customerId);
             return Optional.empty();
         }
 
@@ -110,7 +110,7 @@ public class CustomerServiceImpl implements CustomerService {
         final MediaType mediaType = MediaType.valueOf(file.getContentType());
 
         if (!SUPPORTED_MEDIA_TYPES.contains(mediaType)) {
-            logger.error("Unsupported media type \"{}\" specified for the upload", mediaType);
+            logger.error("Unsupported media type '{}' specified for the upload", mediaType);
             throw new IOException("Unsupported media type " + mediaType + ". Supported media types: " + SUPPORTED_MEDIA_TYPES.toString());
         }
 

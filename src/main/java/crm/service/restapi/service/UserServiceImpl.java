@@ -44,13 +44,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> find(final long userId) {
 
-        logger.info("Finding user \"{}\"", userId);
+        logger.info("Finding user '{}'", userId);
 
         final Optional<User> user = userRepository.findByIdAndActive(userId, true);
         if (user.isPresent()) {
             logger.info("User successfully found: {}", user);
         } else {
-            logger.warn("User \"{}\" not found", userId);
+            logger.warn("User '{}' not found", userId);
         }
 
         return user;
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> find(final String email) {
 
-        logger.info("Finding user with email \"{}\"", email);
+        logger.info("Finding user with email '{}'", email);
 
         return userRepository.findByEmailAndActive(email, true);
     }
@@ -67,15 +67,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public User create(final User user) {
 
+        logger.info("Creating user '{}'", user);
+
         // user already present, also if not soft deleted
         final Optional<User> userFromDb = userRepository.findByEmail(user.getEmail());
         if (userFromDb.isPresent()) {
             final User existingUser = userFromDb.get();
 
             if (existingUser.getActive()) {
-                throw new GenericErrorException("User \"" + user.getEmail() + "\" already present");
+                throw new GenericErrorException("User '" + user.getEmail() + "' already exists");
             } else {
-                // ... if not active, reactivate and update it
+                logger.info("User already present but deactivated: reactivating and updating");
+
                 existingUser.setActive(true);
                 return update(existingUser, user);
             }
@@ -92,7 +95,7 @@ public class UserServiceImpl implements UserService {
         // invalid specified role
         final Optional<Role> role = roleRepository.findByName(rolename);
         if (!role.isPresent()) {
-            logger.error("Invalid role \"{}\" specified for the creation of the user", rolename);
+            logger.error("Invalid role '{}' specified for the creation of the user", rolename);
             throw new ResourceNotFoundException("Role", "name", rolename);
         }
 
@@ -140,7 +143,7 @@ public class UserServiceImpl implements UserService {
             final String rolename = userUpdates.getRole().getName();
             final Optional<Role> role = roleRepository.findByName(rolename);
             if (!role.isPresent()) {
-                logger.error("Invalid role \"{}\" specified for the user update", rolename);
+                logger.error("Invalid role '{}' specified for the user update", rolename);
                 throw new ResourceNotFoundException("Role", "name", rolename);
             }
 
@@ -157,7 +160,7 @@ public class UserServiceImpl implements UserService {
         @Override
     public void delete(final long userId) {
 
-        logger.info("Deleting user \"{}\"", userId);
+        logger.info("Deleting user '{}'", userId);
 
         final User user = find(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
@@ -167,6 +170,6 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(user);
 
-        logger.info("User \"{}\" successfully deleted", userId);
+        logger.info("User '{}' successfully deleted", userId);
     }
 }

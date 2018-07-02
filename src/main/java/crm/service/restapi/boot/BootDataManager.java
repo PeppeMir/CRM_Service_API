@@ -35,7 +35,6 @@ public class BootDataManager {
         final Role adminRole = createRoleIfNotPresent("ADMIN");
         final Role userRole = createRoleIfNotPresent("USER");
 
-        createUserIfNotPresent("user", "user", "user", userRole);
         createUserIfNotPresent("admin", "admin", "admin", adminRole);
     }
 
@@ -48,7 +47,7 @@ public class BootDataManager {
         final Optional<User> optUser = userRepository.findByEmail(email);
         if (!optUser.isPresent()) {
 
-            logger.debug("User \"{}\" not found: creating...", email);
+            logger.debug("User '{}' not found: creating...", email);
 
             final User user = new User();
 
@@ -69,7 +68,7 @@ public class BootDataManager {
 
         return roleRepository.findByName(rolename).orElseGet(() -> {
 
-            logger.debug("Role \"{}\" not found: creating...", rolename);
+            logger.debug("Role '{}' not found: creating...", rolename);
 
             final Role role = new Role();
             role.setName(rolename);

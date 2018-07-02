@@ -12,7 +12,7 @@ public class MissingFieldsException extends RuntimeException {
 	private static final long serialVersionUID = 601525188703257331L;
 
 	public MissingFieldsException(final String fieldname) {
-	    super(fieldname);
+	    super(String.format("Missing field %s", fieldname));
     }
 
     public MissingFieldsException(final List<FieldError> fieldErrors) {
