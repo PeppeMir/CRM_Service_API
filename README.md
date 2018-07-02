@@ -30,10 +30,6 @@ From the cloned directory:
 mvn spring-boot:run
 ```
 
-## Data model
-
-![ScreenShot](https://github.com/PeppeMir/CRM_Service_API/blob/master/files/images/db-model.png)
-
 ## Configuration
 
 Since the application is based on Spring-Boot, all the configurations are specified in the files ```application.properties``` and ```logback.xml```.
@@ -55,6 +51,12 @@ In particular:
 - ```security.oauth2.*``` specify the parameters for the OAuth2 authentication (see next section);
 - ```spring.datasource.*``` specify the data source used by the application. In the given file, a MySQL server is configured;
 - ```spring.jpa.*``` specify the JPA / Hibernate configuration, i.e. db schema operations (create-drop, update, ...), SQL dialect, etc.
+
+## Data model
+
+![ScreenShot](https://github.com/PeppeMir/CRM_Service_API/blob/master/files/images/db-model.png)
+
+For the very first run, it is important to run the application with the setting ```spring.jpa.hibernate.ddl-auto``` enabled to one of the values ```none```, ```validate```, ```update```, ```create``` or ```create-drop```, depending on the preference.
 
 ## Endpoints
 
