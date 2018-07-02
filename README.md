@@ -2,6 +2,11 @@
 
 The aim of this project is the development of a simple, secure REST API that can be easily used for CRM service purposes.
 
+The application stores users and customers. To each user is assigned a role, that can be either ADMIN or USER. All the users must be authenticated to have access to the API exposed by the server. 
+In particular, administrators have unlimited access, while simple users do not have access to the ```/user/**``` part, i.e. they cannot create and manipulate users. Customer can also upload a picture with .jpeg or .png format.
+
+The application starts with the two roles ADMIN and USER already present in the database, together with the admin user. 
+
 ## Deployment and run of the project
 
 If you want deploy and run the project on your local machine, continue reading this session. These manual steps can be simplified by checking out the project directly in your IDE.
@@ -28,6 +33,24 @@ mvn spring-boot:run
 ## Configuration
 
 Since the application is based on Spring-Boot, all the configurations are specified in the files ```application.properties``` and ```logback.xml```.
+
+### logback.xml
+
+With ```logback.xml``` we just configure the logging strategy, together with the text format of each line. Information about time, running thread, level and logging class have been added in addition to the logged message itself.
+
+Furthermore, a rolling policy has been defined for the logging on file: a new log file is generated everytime that either the current file reaches the size of 10MB or the end of the day is passed. This means that we will have files named ```log.2018-07-02.1.log```, ```log.2018-07-02.2.log```, ```log.2018-07-03.1.log```, etc. Last but not least, a maximum number of file is maintained in the LOGS folder, in order to avoid an excessive space usage on the disk.
+
+### application.properties
+
+With ```application.properties``` we mainly specify configurations needed to Spring-boot.
+
+In particular:
+
+- ```server.port``` specifies the listening port of the application;
+- ```logging.level.root``` specifies the general logging level of the application;
+- ```security.oauth2.*``` specify the parameters for the OAuth2 authentication (see next section);
+- ```spring.datasource.*``` specify the data source used by the application. In the given file, a MySQL server is configured;
+- ```spring.jpa.*``` specify the JPA / Hibernate configuration, i.e. db schema operations (create-drop, update, ...), SQL dialect, etc.
 
 ## Endpoints
 
@@ -59,7 +82,7 @@ Since the application is based on Spring-Boot, all the configurations are specif
 
 The application supports [Oauth 2.0](https://oauth.net/2/) protocol. All the performed requests must be authorized.
 
-As for OAuth2 specification, the authorization process can be performed with the request
+As for OAuth2 specification, the authorization process can be performed with the POST request
 
 ```
 http://localhost:[configured_server_port]/oauth/authorize
@@ -93,7 +116,7 @@ Finally a result like this one will be obtained
 { 
   "access_token"  : "1dcbf2a1-5739-4e9e-b0f6-429a743cfebe",
   "token_type"    : "bearer",
-  "expires_in"    : "120",
+  "expires_in"    : "[configured_expiration_seconds]",
   "scope" : "[configured_scope]",
 }
 ```
@@ -117,5 +140,29 @@ until its expiration, which will require the user to authenticate again
 
 Samples requests can be easily performed. for example, by using **Postman**, which can be used both as [Chrome extension](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop) or [Desktop app](https://www.getpostman.com/).
 
+### Example: use Postman to get all the users
 
+By assuming that the application is running on the local machine and is listening on the port ```8080```, let us prepare the ```GET``` request for the address ```http://localhost:8080/user/getAl```, and perform it by pressing the send button
 
+![ScreenShot](https://github.com/PeppeMir/CRM_Service_API/blob/master/readmeImages/0.PNG)
+
+As expected, the application first requires the authentication. To do so using OAuth 2.0, it is enough to switch the type in the authorization tab, and press the get new access token button.
+
+![ScreenShot](https://github.com/PeppeMir/CRM_Service_API/blob/master/readmeImages/1.PNG)
+
+A new window will appear, asking for several parameters. These parameters must be set to the one specified in the configuration of the application, as we have already seen above. 
+
+![ScreenShot](https://github.com/PeppeMir/CRM_Service_API/blob/master/readmeImages/2.PNG)
+
+When all the parameters have been successfully set, we can press the request token button. Despite from the name, Postman will perform both the authorization and token request.
+
+First you will require to insert username and password, then to approve the access to the resources under the configured scope.
+
+![ScreenShot](https://github.com/PeppeMir/CRM_Service_API/blob/master/readmeImages/345.png)
+
+At the end of the process, an access token will be returned, and can be used to perform the authenticated request that was denied before. As we can see in the next image, this time the application recognizes that we are authorized, and returns the list of all the users present in the system
+
+![ScreenShot](https://github.com/PeppeMir/CRM_Service_API/blob/master/readmeImages/6.PNG)
+
+Once obtained, the same token can be use in all the requests, until it expires.
+Please remember that, in addition to the authentication, users with role ADMIN have fully access to the API, but users with role USER only have access to the ```/customer``` part.
