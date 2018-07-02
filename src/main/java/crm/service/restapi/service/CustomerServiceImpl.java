@@ -140,7 +140,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Picture findPicture(final long customerId) {
 
-        logger.info("Finding picture for customer \"{}\"", customerId);
+        logger.info("Finding picture for customer '{}'", customerId);
 
         final Customer customer = find(customerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer", "id", customerId));
@@ -156,9 +156,9 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void delete(final long customerId) {
+    public Customer delete(final long customerId) {
 
-        logger.info("Deleting customer \"{}\"", customerId);
+        logger.info("Deleting customer '{}'", customerId);
 
         final Customer customer = find(customerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer", "id", customerId));
@@ -168,13 +168,15 @@ public class CustomerServiceImpl implements CustomerService {
 
         customerRepository.save(customer);
 
-        logger.info("Customer \"{}\" successfully deleted", customerId);
+        logger.info("Customer '{}' successfully deleted", customerId);
+
+        return customer;
     }
 
     private User findPrincipalUser(final Principal principal) {
         final String principalName = principal.getName();
 
-        logger.info("Looking for principal \"{}\"", principalName);
+        logger.info("Looking for principal '{}'", principalName);
 
         final User principalUser = userService.find(principalName).orElseThrow(() ->
                 new GenericErrorException("User has been removed"));

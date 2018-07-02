@@ -5,6 +5,7 @@ import crm.service.restapi.model.User;
 import crm.service.restapi.service.UserService;
 import crm.service.restapi.service.validation.ParametersValidatorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.Errors;
@@ -52,10 +53,7 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable(value = "id") final Long userId) {
-
-        userService.delete(userId);
-
-        return ResponseEntity.ok("User \"" + userId + "\" deleted");
+    public User deleteUser(@PathVariable(value = "id") final Long userId) {
+        return userService.delete(userId);
     }
 }

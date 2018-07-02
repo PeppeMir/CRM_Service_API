@@ -23,5 +23,5 @@ public interface CustomerService {
 
     Picture findPicture(long customerId);
 
-    void delete(long customerId);
+    Customer delete(long customerId);
 }

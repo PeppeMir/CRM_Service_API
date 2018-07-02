@@ -157,8 +157,8 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-        @Override
-    public void delete(final long userId) {
+    @Override
+    public User delete(final long userId) {
 
         logger.info("Deleting user '{}'", userId);
 
@@ -171,5 +171,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
 
         logger.info("User '{}' successfully deleted", userId);
+
+        return user;
     }
 }
