@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findById(final long userId) {
+    public Optional<User> find(final long userId) {
 
         logger.info("Finding user \"{}\"", userId);
 
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByEmail(final String email) {
+    public Optional<User> find(final String email) {
 
         logger.info("Finding user with email \"{}\"", email);
 
@@ -112,7 +112,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User update(final long userId, final User userUpdates) {
 
-        final User user = findById(userId)
+        final User user = find(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
 
         return update(user, userUpdates);
@@ -159,7 +159,7 @@ public class UserServiceImpl implements UserService {
 
         logger.info("Deleting user \"{}\"", userId);
 
-        final User user = findById(userId)
+        final User user = find(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
 
         // soft delete

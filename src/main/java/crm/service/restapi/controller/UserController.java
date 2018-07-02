@@ -39,7 +39,7 @@ public class UserController {
 
     @GetMapping("/get/{id}")
     public User getUserById(@PathVariable(value = "id") final Long userId) {
-        return userService.findById(userId)
+        return userService.find(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
     }
 

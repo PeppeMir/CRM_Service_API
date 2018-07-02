@@ -9,9 +9,9 @@ public interface UserService {
 
     List<User> findAll();
 
-    Optional<User> findById(long userId);
+    Optional<User> find(long userId);
 
-    Optional<User> findByEmail(String email);
+    Optional<User> find(String email);
 
     User create(User user);
 

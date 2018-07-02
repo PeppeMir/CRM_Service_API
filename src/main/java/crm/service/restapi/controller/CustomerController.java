@@ -46,7 +46,7 @@ public class CustomerController {
 
     @GetMapping("/get/{id}")
     public Customer getCustomerById(@PathVariable(value = "id") final Long customerId) {
-        return customerService.findById(customerId)
+        return customerService.find(customerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer", "id", customerId));
     }
 

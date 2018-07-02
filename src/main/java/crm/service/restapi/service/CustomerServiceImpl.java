@@ -48,7 +48,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Optional<Customer> findById(final long customerId) {
+    public Optional<Customer> find(final long customerId) {
 
         logger.info("Finding customer \"{}\"", customerId);
 
@@ -82,7 +82,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer update(final long customerId, final Customer customerUpdates, final Principal principal) {
 
-        final Customer customer = findById(customerId).orElseThrow(() ->
+        final Customer customer = find(customerId).orElseThrow(() ->
                 new ResourceNotFoundException("Customer", "id", customerId));
 
         final User principalUser = findPrincipalUser(principal);
@@ -114,7 +114,7 @@ public class CustomerServiceImpl implements CustomerService {
             throw new IOException("Unsupported media type " + mediaType + ". Supported media types: " + SUPPORTED_MEDIA_TYPES.toString());
         }
 
-        final Customer customer = findById(customerId)
+        final Customer customer = find(customerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer", "id", customerId));
 
         final Picture picture = new Picture();
@@ -142,7 +142,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         logger.info("Finding picture for customer \"{}\"", customerId);
 
-        final Customer customer = findById(customerId)
+        final Customer customer = find(customerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer", "id", customerId));
 
         if (customer.getPicture() == null) {
@@ -160,7 +160,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         logger.info("Deleting customer \"{}\"", customerId);
 
-        final Customer customer = findById(customerId)
+        final Customer customer = find(customerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer", "id", customerId));
 
         // soft delete
@@ -176,7 +176,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         logger.info("Looking for principal \"{}\"", principalName);
 
-        final User principalUser = userService.findByEmail(principalName).orElseThrow(() ->
+        final User principalUser = userService.find(principalName).orElseThrow(() ->
                 new GenericErrorException("User has been removed"));
 
         logger.info("Using user as principal: {}", principalUser);

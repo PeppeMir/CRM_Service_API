@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import crm.service.restapi.model.User;
 import crm.service.restapi.model.security.UserDetailsImpl;
-import crm.service.restapi.repository.UserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -22,7 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
 
-		final Optional<User> usersOptional = userService.findByEmail(username);
+		final Optional<User> usersOptional = userService.find(username);
 
 		final User user = usersOptional.orElseThrow(() 
 				-> new UsernameNotFoundException("User not found"));

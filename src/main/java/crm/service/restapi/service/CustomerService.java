@@ -13,7 +13,7 @@ public interface CustomerService {
 
     List<Customer> findAll();
 
-    Optional<Customer> findById(long customerId);
+    Optional<Customer> find(long customerId);
 
     Customer create(Customer customer, Principal principal);
 

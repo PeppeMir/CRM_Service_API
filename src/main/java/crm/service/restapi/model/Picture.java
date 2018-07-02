@@ -32,7 +32,10 @@ public class Picture {
 
     @Column(name = "url", nullable = false)
 	private String url;
-	
+
+    @OneToOne
+	private Customer customer;
+
 	public long getId() {
 		return id;
 	}
