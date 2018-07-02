@@ -9,7 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
 @SpringBootTest
-public class RestapiApplicationTests {
+public class ApplicationTests {
 
 	@Test
 	public void fileUpload() {
