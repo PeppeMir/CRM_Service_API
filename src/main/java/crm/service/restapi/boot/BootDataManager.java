@@ -8,10 +8,12 @@ import crm.service.restapi.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.Optional;
 
@@ -19,6 +21,18 @@ import java.util.Optional;
 public class BootDataManager {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Value("${datasource.startup.adminUser.name}")
+    private String name;
+
+    @Value("${datasource.startup.adminUser.surname}")
+    private String surname;
+
+    @Value("${datasource.startup.adminUser.email}")
+    private String email;
+
+    @Value("${datasource.startup.adminUser.password}")
+    private String password;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -32,17 +46,24 @@ public class BootDataManager {
     @EventListener(ApplicationReadyEvent.class)
     public void afterStartup() {
 
-        final Role adminRole = createRoleIfNotPresent("ADMIN");
-        final Role userRole = createRoleIfNotPresent("USER");
+        // always add roles, if not present
+        createRoleIfNotPresent(Role.USER);
+        final Role adminRole = createRoleIfNotPresent(Role.ADMIN);
 
-        createUserIfNotPresent("admin", "admin", "admin", adminRole);
+        // check whether to add the user or not: skip if at least a field is not specified
+        if (areSettingsValid()) {
+            createUserIfNotPresent(adminRole);
+        }
     }
 
-    private void createUserIfNotPresent(
-            final String name,
-            final String email,
-            final String password,
-            final Role role) {
+    private boolean areSettingsValid() {
+        return !StringUtils.isEmpty(name) &&
+                !StringUtils.isEmpty(surname) &&
+                !StringUtils.isEmpty(email) &&
+                !StringUtils.isEmpty(password);
+    }
+
+    private void createUserIfNotPresent(final Role role) {
 
         final Optional<User> optUser = userRepository.findByEmail(email);
         if (!optUser.isPresent()) {

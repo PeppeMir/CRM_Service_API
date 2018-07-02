@@ -18,6 +18,9 @@ import org.hibernate.validator.constraints.NotBlank;
 @Table(name = "role")
 public class Role {
 
+	public static final String ADMIN = "ADMIN";
+	public static final String USER = "USER";
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "role_id")
