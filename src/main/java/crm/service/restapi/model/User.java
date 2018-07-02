@@ -9,7 +9,8 @@ import org.springframework.data.annotation.Transient;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user")
+@Table(name = "user",
+        indexes = {@Index(name = "IDX_USER_EMAIL_ACTIVE", columnList = "email, active")})
 public class User {
 
     @Id

@@ -7,7 +7,8 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "customer")
+@Table(name = "customer",
+        indexes = {@Index(name = "IDX_CUSTOMER_ACTIVE", columnList = "active")})
 @Where(clause="active=1")
 public class Customer {
 
