@@ -1,0 +1,309 @@
+{
+	"variables": [],
+	"info": {
+		"name": "USERS",
+		"_postman_id": "0efcdd62-eeb1-6e1d-d236-7c684ffd6751",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CREATE JOHN (ADMIN)",
+			"request": {
+				"url": {
+					"raw": "http://localhost:8080/user/create?access_token=46fe14d7-6c08-4284-b17d-36f8a761b773",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"create"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "46fe14d7-6c08-4284-b17d-36f8a761b773",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"name\" : \"John\", \"surname\" : \"Lennon\", \"email\" : \"john@beatles.com\", \"password\" : \"johnandyoko\", \"role\" : { \"name\" : \"ADMIN\" }  }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE YOKO (USER)",
+			"request": {
+				"url": {
+					"raw": "http://localhost:8080/user/create?access_token=a35d1729-1cdd-4bfb-85e7-0978755a7602",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"create"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "a35d1729-1cdd-4bfb-85e7-0978755a7602",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"name\" : \"Yoko\", \"surname\" : \"Ono\", \"email\" : \"yoko@breaks.com\", \"password\" : \"yokoandjohn\", \"role\" : { \"name\" : \"USER\" }  }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GET ALL",
+			"request": {
+				"url": {
+					"raw": "http://localhost:8080/user/getAll?access_token=a35d1729-1cdd-4bfb-85e7-0978755a7602",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"getAll"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "a35d1729-1cdd-4bfb-85e7-0978755a7602",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GET SINGLE",
+			"request": {
+				"url": {
+					"raw": "http://localhost:8080/user/get/4?access_token=0d0f28b0-12dc-4595-a746-836904faab20",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"get",
+						"4"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "0d0f28b0-12dc-4595-a746-836904faab20",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE (ROLE)",
+			"request": {
+				"url": {
+					"raw": "http://localhost:8080/user/update/5?access_token=a35d1729-1cdd-4bfb-85e7-0978755a7602",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"update",
+						"5"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "a35d1729-1cdd-4bfb-85e7-0978755a7602",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"role\" : { \"name\" : \"ADMIN\" } }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE (OTHER DATA)",
+			"request": {
+				"url": {
+					"raw": "http://localhost:8080/user/update/5?access_token=a35d1729-1cdd-4bfb-85e7-0978755a7602",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"update",
+						"5"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "a35d1729-1cdd-4bfb-85e7-0978755a7602",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"name\" : \"Paul\", \"surname\" : \"Mc. Cartney\", \"email\": \"paul@beatles.com\"  }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE (PASSWORD)",
+			"request": {
+				"url": {
+					"raw": "http://localhost:8080/user/update/5?access_token=a35d1729-1cdd-4bfb-85e7-0978755a7602",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"update",
+						"5"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "a35d1729-1cdd-4bfb-85e7-0978755a7602",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"password\" : \"paulrulez\" }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE",
+			"request": {
+				"url": {
+					"raw": "http://localhost:8080/user/delete/2?access_token=46fe14d7-6c08-4284-b17d-36f8a761b773",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"delete",
+						"2"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "46fe14d7-6c08-4284-b17d-36f8a761b773",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

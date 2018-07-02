@@ -1,0 +1,311 @@
+{
+	"variables": [],
+	"info": {
+		"name": "CUSTOMERS",
+		"_postman_id": "9f37ca3a-6992-4a9a-bf1c-f589c91ac5cd",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CREATE BRIAN",
+			"request": {
+				"url": {
+					"raw": "http://localhost:8080/customer/create?access_token=69c8fa8b-30f7-4320-ac1d-62b09382f1c0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customer",
+						"create"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "69c8fa8b-30f7-4320-ac1d-62b09382f1c0",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"name\" : \"Brian\", \"surname\" : \"Epstein\" }"
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE GEOFF",
+			"request": {
+				"url": {
+					"raw": "http://localhost:8080/customer/create?access_token=915369cd-4eb7-451a-a0fb-03fb9b577cd9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customer",
+						"create"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "915369cd-4eb7-451a-a0fb-03fb9b577cd9",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"name\" : \"Geoff\", \"surname\" : \"Emerick\" }"
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "GET ALL",
+			"request": {
+				"url": {
+					"raw": "http://localhost:8080/customer/getAll?access_token=46fe14d7-6c08-4284-b17d-36f8a761b773",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customer",
+						"getAll"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "46fe14d7-6c08-4284-b17d-36f8a761b773",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GET SINGLE",
+			"request": {
+				"url": {
+					"raw": "http://localhost:8080/customer/get/1?access_token=cc1c7267-d818-40c8-a234-4937c7ea853b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customer",
+						"get",
+						"1"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "cc1c7267-d818-40c8-a234-4937c7ea853b",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "UPLOAD PICTURE",
+			"request": {
+				"url": {
+					"raw": "http://localhost:8080/customer/uploadPicture/3?access_token=46fe14d7-6c08-4284-b17d-36f8a761b773",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customer",
+						"uploadPicture",
+						"3"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "46fe14d7-6c08-4284-b17d-36f8a761b773",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"description": "",
+							"type": "file",
+							"src": "scarlett1.jpg"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "FIND PICTURE",
+			"request": {
+				"url": {
+					"raw": "http://localhost:8080/customer/findPicture/3?access_token=46fe14d7-6c08-4284-b17d-36f8a761b773",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customer",
+						"findPicture",
+						"3"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "46fe14d7-6c08-4284-b17d-36f8a761b773",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"value": "",
+							"description": "",
+							"type": "file"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE",
+			"request": {
+				"url": {
+					"raw": "http://localhost:8080/customer/update/3?access_token=46fe14d7-6c08-4284-b17d-36f8a761b773",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customer",
+						"update",
+						"3"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "46fe14d7-6c08-4284-b17d-36f8a761b773",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"name\" : \"Emma\", \"surname\" : \"Emmerich\" }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE",
+			"request": {
+				"url": {
+					"raw": "http://localhost:8080/customer/delete/3?access_token=46fe14d7-6c08-4284-b17d-36f8a761b773",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customer",
+						"delete",
+						"3"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "46fe14d7-6c08-4284-b17d-36f8a761b773",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
