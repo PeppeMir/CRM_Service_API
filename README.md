@@ -56,7 +56,7 @@ In particular:
 
 ![ScreenShot](https://github.com/PeppeMir/CRM_Service_API/blob/master/files/images/db-model.png)
 
-For the very first run, it is important to run the application with the setting ```spring.jpa.hibernate.ddl-auto``` enabled to one of the values ```none```, ```validate```, ```update```, ```create``` or ```create-drop```, depending on the preference.
+For the very first run, it is important to run the application with the setting ```spring.jpa.hibernate.ddl-auto``` enabled to one of the values ```create```, ```create-drop``` or ```update```, depending on the preference.
 
 ## Endpoints
 
