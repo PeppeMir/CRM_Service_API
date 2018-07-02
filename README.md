@@ -1,11 +1,11 @@
 # A simple REST API for CRM services
 
-The aim of this project is the development of a simple, secure REST API that can be easily used for CRM service purposes.
+The aim of this project is the development of a simple and secure REST API that can be easily used for CRM service purposes.
 
-The application stores users and customers. To each user is assigned a role, that can be either ADMIN or USER. All the users must be authenticated to have access to the API exposed by the server. 
-In particular, administrators have unlimited access, while simple users do not have access to the ```/user/**``` part, i.e. they cannot create and manipulate users. Customer can also upload a picture with .jpeg or .png format.
+The application stores users and customers. To each user is assigned a role, that can be either ADMIN or USER. All the users need to be authenticated to have access to the API exposed by the server. 
+In particular, administrators have unlimited access, while simple users only can manipulate customers.
 
-The application starts with the two roles ADMIN and USER already present in the database, together with the admin user. 
+The application always starts with the two roles ADMIN and USER already present in the database and, if configured, also with an admin user. 
 
 ## Deployment and run of the project
 
@@ -32,13 +32,14 @@ mvn spring-boot:run
 
 ## Configuration
 
-Since the application is based on Spring-Boot, all the configurations are specified in the files ```application.properties``` and ```logback.xml```.
+The application, based on Spring-Boot, keeps all the needed configurations in the files ```application.properties``` and ```logback.xml```.
 
 ### logback.xml
 
 With ```logback.xml``` we just configure the logging strategy, together with the text format of each line. Information about time, running thread, level and logging class have been added in addition to the logged message itself.
 
-Furthermore, a rolling policy has been defined for the logging on file: a new log file is generated everytime that either the current file reaches the size of 10MB or the end of the day is passed. This means that we will have files named ```log.2018-07-02.1.log```, ```log.2018-07-02.2.log```, ```log.2018-07-03.1.log```, etc. Last but not least, a maximum number of file is maintained in the LOGS folder, in order to avoid an excessive space usage on the disk.
+Furthermore, a rolling policy has been defined for the logging on file: a new log file is generated everytime that either the current file reaches the size of 10MB or the end of the day is passed. This means that we will have files named ```log.2018-07-02.0.log```, ```log.2018-07-02.1.log```, ```log.2018-07-03.0.log```, etc. 
+Last but not least, a maximum number of file is maintained in the LOGS folder, in order to avoid an excessive space usage on the disk.
 
 ### application.properties
 
@@ -51,6 +52,7 @@ In particular:
 - ```security.oauth2.*``` specify the parameters for the OAuth2 authentication (see next section);
 - ```spring.datasource.*``` specify the data source used by the application. In the given file, a MySQL server is configured;
 - ```spring.jpa.*``` specify the JPA / Hibernate configuration, i.e. db schema operations (create-drop, update, ...), SQL dialect, etc.
+- ```datasource.startup.adminUser.*``` specify the parameters for the creation of an admin user just after the application boot. This is intended as a first run utility that allows to create a first admin user with which perform the initial setup of the application.
 
 ## Data model
 
@@ -81,10 +83,10 @@ For the very first run, it is important to run the application with the setting 
 | DELETE | /user/delete/{id}        | Delete the user with the specified id |
 
 
-In order to ensure data consistency and to allow future historical/statistical searches, both the ```user/delete/{id}``` and ```customer/delete/{id}``` follow a **soft-deletion** politic, based on the ```active``` flag available in their data model.
+In order to ensure data consistency and to allow future historical/statistical searches, both the ```user/delete/{id}``` and ```customer/delete/{id}``` follow a soft-deletion politic, based on the ```active``` flag available in their data model.
 
-Even if the data are not effectively deleted from the database, the data will be not returned to the consumer of the API.
-This means that if the user with ```id=1``` has been (soft-)deleted from the system, it will remain in the database but will be not part of the results of a ```/user/getAll```.
+Even if the data are not effectively deleted from the database, they will be not returned to the consumer of the API.
+This means that if the user with ```id=1``` has been (soft-)deleted from the system, it will remain in the database but will be not part of the results of a ```/user/getAll```, for example.
 
 ### Security
 
@@ -98,10 +100,10 @@ http://localhost:[configured_server_port]/oauth/authorize
 
 by specifying the following parameters
 
-- **response_type=code**
+- response_type=**code**
 - client_id=[configure_client_id]
 - scope=[configured_scope]
-- redirect_uri=https://xxxxxx.xxx
+- redirect_uri=[a_redirect_uri]
 
 together with username and password in the prompted login page.
 
@@ -115,7 +117,7 @@ by specifying the following parameters
 
 - client_id=[configure_client_id]
 - client_secret=[configured_client_secret]
-- grant_type=authorization_code
+- grant_type=**authorization_code**
 - code=**[auth_code]**
 
 Finally a result like this one will be obtained
@@ -177,9 +179,10 @@ Please remember that, in addition to the authentication, users with role ADMIN h
 
 ## Postman collections
 
-The Postman collections that have been used for the tests can be downloaded and imported by using the following links:
+The Postman collections that have been used for the tests can be downloaded by using the following links:
 
 - [Customers collection](https://github.com/PeppeMir/CRM_Service_API/blob/master/files/postman/CUSTOMERS.postman_collection.json)
 - [Users collection](https://github.com/PeppeMir/CRM_Service_API/blob/master/files/postman/USERS.postman_collection.json)
 
+The JSON files representing the collections can be easily imported into Postman, used and modified to perform all the required tests.
 
