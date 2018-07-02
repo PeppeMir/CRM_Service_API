@@ -3,12 +3,14 @@ package crm.service.restapi.boot;
 import crm.service.restapi.model.Role;
 import crm.service.restapi.model.User;
 import crm.service.restapi.repository.RoleRepository;
+import crm.service.restapi.repository.UserRepository;
 import crm.service.restapi.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -19,10 +21,13 @@ public class BootDataManager {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
     private RoleRepository roleRepository;
 
     @Autowired
-    private UserService userService;
+    private UserRepository userRepository;
 
     @EventListener(ApplicationReadyEvent.class)
     public void afterStartup() {
@@ -40,19 +45,21 @@ public class BootDataManager {
             final String password,
             final Role role) {
 
-        final Optional<User> optUser = userService.findByEmail(email);
+        final Optional<User> optUser = userRepository.findByEmail(email);
         if (!optUser.isPresent()) {
 
             logger.debug("User \"{}\" not found: creating...", email);
 
             final User user = new User();
+
             user.setName(name);
             user.setSurname(name);
             user.setEmail(email);
-            user.setPassword(password);
+            user.setPassword(bCryptPasswordEncoder.encode(password));
             user.setRole(role);
+            user.setActive(true);
 
-            userService.create(user);
+            userRepository.save(user);
 
             logger.debug("User created: {}", user);
         }

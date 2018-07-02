@@ -1,11 +1,14 @@
 package crm.service.restapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "customer")
+@Where(clause="active=1")
 public class Customer {
 
 	@Id
@@ -26,12 +29,16 @@ public class Customer {
 	private Picture picture;
 
     @ManyToOne
-    @JoinColumn(name = "creation_user_id")
+    @JoinColumn(name = "creation_user_id", nullable = false)
 	private User creationUser;
 
     @ManyToOne
-    @JoinColumn(name = "last_mod_user_id")
+    @JoinColumn(name = "last_mod_user_id", nullable = false)
     private User lastModUser;
+
+	@JoinColumn(name = "active", nullable = false)
+    @JsonIgnore
+    private Boolean active;
 
 	public long getId() {
 		return id;
@@ -81,7 +88,15 @@ public class Customer {
         this.lastModUser = lastModUser;
     }
 
-	@Override
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    @Override
 	public String toString() {
 		return "Customer{" +
 				"id=" + id +

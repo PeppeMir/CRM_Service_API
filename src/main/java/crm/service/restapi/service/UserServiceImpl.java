@@ -1,5 +1,6 @@
 package crm.service.restapi.service;
 
+import crm.service.restapi.exception.GenericErrorException;
 import crm.service.restapi.exception.MissingFieldsException;
 import crm.service.restapi.exception.ResourceNotFoundException;
 import crm.service.restapi.model.Role;
@@ -37,7 +38,7 @@ public class UserServiceImpl implements UserService {
 
         logger.info("Finding all the users");
 
-        return userRepository.findAll();
+        return userRepository.findByActive(true);
     }
 
     @Override
@@ -45,15 +46,14 @@ public class UserServiceImpl implements UserService {
 
         logger.info("Finding user \"{}\"", userId);
 
-        final User user = userRepository.findOne(userId);
-        if (user == null) {
+        final Optional<User> user = userRepository.findByIdAndActive(userId, true);
+        if (user.isPresent()) {
+            logger.info("User successfully found: {}", user);
+        } else {
             logger.warn("User \"{}\" not found", userId);
-            return Optional.empty();
         }
 
-        logger.info("User successfully found: {}", user);
-
-        return Optional.of(user);
+        return user;
     }
 
     @Override
@@ -61,11 +61,25 @@ public class UserServiceImpl implements UserService {
 
         logger.info("Finding user with email \"{}\"", email);
 
-        return userRepository.findByEmail(email);
+        return userRepository.findByEmailAndActive(email, true);
     }
 
     @Override
     public User create(final User user) {
+
+        // user already present, also if not soft deleted
+        final Optional<User> userFromDb = userRepository.findByEmail(user.getEmail());
+        if (userFromDb.isPresent()) {
+            final User existingUser = userFromDb.get();
+
+            if (existingUser.getActive()) {
+                throw new GenericErrorException("User \"" + user.getEmail() + "\" already present");
+            } else {
+                // ... if not active, reactivate and update it
+                existingUser.setActive(true);
+                return update(existingUser, user);
+            }
+        }
 
         // no specified role
         if (user.getRole() == null) {
@@ -86,6 +100,8 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
+        user.setActive(true);
+
         userRepository.save(user);
 
         logger.info("User successfully created: {}", user);
@@ -98,6 +114,11 @@ public class UserServiceImpl implements UserService {
 
         final User user = findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+
+        return update(user, userUpdates);
+    }
+
+    private User update(final User user, final User userUpdates) {
 
         if (!StringUtils.isEmpty(userUpdates.getName())) {
             user.setName(userUpdates.getName());
@@ -133,7 +154,7 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    @Override
+        @Override
     public void delete(final long userId) {
 
         logger.info("Deleting user \"{}\"", userId);
@@ -141,7 +162,10 @@ public class UserServiceImpl implements UserService {
         final User user = findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
 
-        userRepository.delete(user);
+        // soft delete
+        user.setActive(false);
+
+        userRepository.save(user);
 
         logger.info("User \"{}\" successfully deleted", userId);
     }

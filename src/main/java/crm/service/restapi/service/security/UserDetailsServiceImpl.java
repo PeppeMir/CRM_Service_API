@@ -2,6 +2,7 @@ package crm.service.restapi.service.security;
 
 import java.util.Optional;
 
+import crm.service.restapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,12 +17,12 @@ import crm.service.restapi.repository.UserRepository;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
-	private UserRepository usersRepository;
+	private UserService userService;
 
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
 
-		final Optional<User> usersOptional = usersRepository.findByEmail(username);
+		final Optional<User> usersOptional = userService.findByEmail(username);
 
 		final User user = usersOptional.orElseThrow(() 
 				-> new UsernameNotFoundException("User not found"));

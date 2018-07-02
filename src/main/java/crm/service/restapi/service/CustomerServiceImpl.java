@@ -70,6 +70,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         customer.setCreationUser(principalUser);
         customer.setLastModUser(principalUser);
+        customer.setActive(true);
 
         customerRepository.save(customer);
 
@@ -155,14 +156,17 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void delete(long customerId) {
+    public void delete(final long customerId) {
 
         logger.info("Deleting customer \"{}\"", customerId);
 
         final Customer customer = findById(customerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer", "id", customerId));
 
-        customerRepository.delete(customer);
+        // soft delete
+        customer.setActive(false);
+
+        customerRepository.save(customer);
 
         logger.info("Customer \"{}\" successfully deleted", customerId);
     }
