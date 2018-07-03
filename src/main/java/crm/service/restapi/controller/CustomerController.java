@@ -82,9 +82,9 @@ public class CustomerController {
         final Picture picture = customerService.findPicture(customerId);
 
         final MediaType mediaType = MediaType.valueOf(picture.getMediaType());
-        final byte[] content = picture.getData();
+        //final byte[] content = picture.getData();
 
-        return ResponseEntity.ok().contentType(mediaType).body(content);
+        return ResponseEntity.ok().contentType(mediaType).body(new byte[]{} /*content*/);
     }
 
     @DeleteMapping("/delete/{id}")

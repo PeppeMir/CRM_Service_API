@@ -6,6 +6,7 @@ import crm.service.restapi.model.Customer;
 import crm.service.restapi.model.Picture;
 import crm.service.restapi.model.User;
 import crm.service.restapi.repository.CustomerRepository;
+import crm.service.restapi.service.picture.S3Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,6 @@ import java.util.Optional;
 public class CustomerServiceImpl implements CustomerService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    private static final List<MediaType> SUPPORTED_MEDIA_TYPES
-            = Arrays.asList(MediaType.IMAGE_JPEG, MediaType.IMAGE_PNG);
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -66,6 +64,8 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer create(final Customer customer, final Principal principal) {
 
+        logger.info("Creating customer '{}'", customer);
+
         final User principalUser = findPrincipalUser(principal);
 
         customer.setCreationUser(principalUser);
@@ -81,6 +81,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer update(final long customerId, final Customer customerUpdates, final Principal principal) {
+
+        logger.info("Updating customer '{}'", customerId);
 
         final Customer customer = find(customerId).orElseThrow(() ->
                 new ResourceNotFoundException("Customer", "id", customerId));
@@ -105,27 +107,25 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Picture uploadPicture(final long customerId, final MultipartFile file) throws IOException {
+    public Picture uploadPicture(final long customerId, final MultipartFile file) {
 
-        final MediaType mediaType = MediaType.valueOf(file.getContentType());
-
-        if (!SUPPORTED_MEDIA_TYPES.contains(mediaType)) {
-            logger.error("Unsupported media type '{}' specified for the upload", mediaType);
-            throw new IOException("Unsupported media type " + mediaType + ". Supported media types: " + SUPPORTED_MEDIA_TYPES.toString());
-        }
+        logger.info("Uploading picture for customer '{}'", customerId);
 
         final Customer customer = find(customerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer", "id", customerId));
 
-        final Picture picture = new Picture();
-        picture.setMediaType(file.getContentType());
-        picture.setData(file.getBytes());
-        picture.setUrl("/customer/findPicture/" + customerId);
+        final Picture picture;
+        try {
+            picture = pictureService.store(file);
 
-        // delete old picture from the database
-        if (customer.getPicture() != null) {
-            logger.info("Deleting old picture {}", picture);
-            pictureService.delete(customer.getPicture());
+            // delete old picture from the database
+            if (customer.getPicture() != null) {
+                logger.info("Deleting old picture {}", picture);
+                pictureService.delete(customer.getPicture());
+            }
+        } catch (final IOException e) {
+            logger.error("Unable to upload the picture", e);
+            throw new GenericErrorException(e.getMessage());
         }
 
         customer.setPicture(picture);
