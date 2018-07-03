@@ -40,7 +40,7 @@ public class User {
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
-    @JoinColumn(name = "active", nullable = false)
+    @Column(name = "active", nullable = false)
     @JsonIgnore
     private Boolean active;
 

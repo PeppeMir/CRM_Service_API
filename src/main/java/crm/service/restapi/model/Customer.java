@@ -37,7 +37,7 @@ public class Customer {
     @JoinColumn(name = "last_mod_user_id", nullable = false)
     private User lastModUser;
 
-	@JoinColumn(name = "active", nullable = false)
+	@Column(name = "active", nullable = false)
     @JsonIgnore
     private Boolean active;
 
