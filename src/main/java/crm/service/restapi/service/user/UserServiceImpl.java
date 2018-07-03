@@ -1,4 +1,4 @@
-package crm.service.restapi.service;
+package crm.service.restapi.service.user;
 
 import crm.service.restapi.exception.GenericErrorException;
 import crm.service.restapi.exception.MissingFieldsException;

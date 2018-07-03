@@ -1,4 +1,4 @@
-package crm.service.restapi.service;
+package crm.service.restapi.service.user;
 
 import crm.service.restapi.model.User;
 

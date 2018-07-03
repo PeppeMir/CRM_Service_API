@@ -2,11 +2,9 @@ package crm.service.restapi.controller;
 
 import crm.service.restapi.exception.ResourceNotFoundException;
 import crm.service.restapi.model.User;
-import crm.service.restapi.service.UserService;
+import crm.service.restapi.service.user.UserService;
 import crm.service.restapi.service.validation.ParametersValidatorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;

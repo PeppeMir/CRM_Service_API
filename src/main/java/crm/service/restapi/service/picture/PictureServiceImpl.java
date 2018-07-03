@@ -1,8 +1,8 @@
-package crm.service.restapi.service;
+package crm.service.restapi.service.picture;
 
 import crm.service.restapi.model.Picture;
 import crm.service.restapi.repository.PictureRepository;
-import crm.service.restapi.service.picture.S3Service;
+import crm.service.restapi.service.s3.S3Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

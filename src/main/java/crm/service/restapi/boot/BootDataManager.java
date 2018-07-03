@@ -4,7 +4,6 @@ import crm.service.restapi.model.Role;
 import crm.service.restapi.model.User;
 import crm.service.restapi.repository.RoleRepository;
 import crm.service.restapi.repository.UserRepository;
-import crm.service.restapi.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

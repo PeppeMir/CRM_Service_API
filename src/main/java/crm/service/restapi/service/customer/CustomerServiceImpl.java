@@ -1,4 +1,4 @@
-package crm.service.restapi.service;
+package crm.service.restapi.service.customer;
 
 import crm.service.restapi.exception.GenericErrorException;
 import crm.service.restapi.exception.ResourceNotFoundException;
@@ -6,11 +6,11 @@ import crm.service.restapi.model.Customer;
 import crm.service.restapi.model.Picture;
 import crm.service.restapi.model.User;
 import crm.service.restapi.repository.CustomerRepository;
-import crm.service.restapi.service.picture.S3Service;
+import crm.service.restapi.service.picture.PictureService;
+import crm.service.restapi.service.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 

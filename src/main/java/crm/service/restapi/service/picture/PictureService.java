@@ -1,4 +1,4 @@
-package crm.service.restapi.service;
+package crm.service.restapi.service.picture;
 
 import crm.service.restapi.model.Picture;
 import org.springframework.web.multipart.MultipartFile;

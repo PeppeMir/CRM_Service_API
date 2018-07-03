@@ -1,19 +1,15 @@
-package crm.service.restapi.service.picture;
+package crm.service.restapi.service.s3;
 
-import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.PutObjectResult;
-import crm.service.restapi.exception.GenericErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,15 +20,10 @@ import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.UUID;
 
-@Service
-public class S3Service {
-
-    /*@Value("${amazonws.s3.endpointUrl}")
-    private String endpointUrl;*/
+@Service("s3Service")
+public class S3ServiceImpl implements S3Service {
 
     @Value("${amazonws.s3.endpointRegion}")
     private String endpointRegion;
@@ -60,6 +51,7 @@ public class S3Service {
                 .build();
     }
 
+    @Override
     public String store(final MultipartFile multipartFile) throws IOException {
 
         final String customFilename = washAndgenerateCustomFilename(multipartFile.getOriginalFilename());
@@ -90,6 +82,7 @@ public class S3Service {
         return s3client.getUrl(bucketName, customFilename).toExternalForm();
     }
 
+    @Override
     public void delete(final String url) throws IOException {
 
         //final String filename = Paths.get(url).getFileName().toString();

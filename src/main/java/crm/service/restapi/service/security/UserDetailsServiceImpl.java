@@ -2,7 +2,7 @@ package crm.service.restapi.service.security;
 
 import java.util.Optional;
 
-import crm.service.restapi.service.UserService;
+import crm.service.restapi.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

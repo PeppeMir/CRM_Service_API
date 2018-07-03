@@ -4,7 +4,7 @@ import crm.service.restapi.exception.GenericErrorException;
 import crm.service.restapi.exception.ResourceNotFoundException;
 import crm.service.restapi.model.Customer;
 import crm.service.restapi.model.Picture;
-import crm.service.restapi.service.CustomerService;
+import crm.service.restapi.service.customer.CustomerService;
 import crm.service.restapi.service.validation.ParametersValidatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

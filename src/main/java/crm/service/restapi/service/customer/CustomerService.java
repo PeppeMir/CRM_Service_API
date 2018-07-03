@@ -1,4 +1,4 @@
-package crm.service.restapi.service;
+package crm.service.restapi.service.customer;
 
 import crm.service.restapi.model.Customer;
 import crm.service.restapi.model.Picture;
