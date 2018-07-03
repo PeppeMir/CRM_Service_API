@@ -56,7 +56,7 @@ In particular:
 - ```amazonws.s3.*``` specify the S3-Amazon Web Service in which perform the storage of the pictures of the customers;
 - ```datasource.startup.adminUser.*``` specify the parameters for the creation of an admin user just after the application boot. This is intended as a first run utility that allows to create a first admin user with which perform the initial setup of the application.
 
-In particular. here there are some example of configuration  and S3:
+In particular. here there are some example of configuration:
 
 #### for the datasource:
 ```
@@ -99,6 +99,7 @@ For the very first run, it is important to run the application with the setting 
 | POST   | /customer/uploadPicture/{id} | Upload a picture for the customer with the specified id |
 | GET    | /customer/findPicture/{id}   | Get the picture for the customer with the specified id |
 | DELETE | /customer/delete/{id}        | Delete the customer with the specified id |
+
 
 | Method | Url | Decription |
 | ------ | --- | ---------- |
@@ -172,7 +173,7 @@ until its expiration, which will require the user to authenticate again
 }
 ```
 
-The process is similar to the one implemented in [Google sign-in](https://developers.google.com/identity/protocols/OAuth2), when from a particular website, we click on **Login with Facebbok** or **Login with Google**.
+The process is similar to the one implemented in [Google sign-in](https://developers.google.com/identity/protocols/OAuth2) or [Facebook login flow](https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow/), when from a particular website, we click on **Login with Facebook** or **Login with Google**.
 
 ![ScreenShot](https://developers.google.com/accounts/images/webflow.png)
 
