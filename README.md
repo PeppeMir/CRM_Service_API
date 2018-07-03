@@ -51,7 +51,8 @@ In particular:
 - ```logging.level.root``` specifies the general logging level of the application;
 - ```security.oauth2.*``` specify the parameters for the OAuth2 authentication (see next section);
 - ```spring.datasource.*``` specify the data source used by the application. In the given file, a MySQL server is configured;
-- ```spring.jpa.*``` specify the JPA / Hibernate configuration, i.e. db schema operations (create-drop, update, ...), SQL dialect, etc.
+- ```spring.jpa.*``` specify the JPA / Hibernate configuration, i.e. db schema operations (create-drop, update, ...), SQL dialect, etc.;
+- ```amazonws.s3.*``` specify the S3-Amazon Web Service in which perform the storage of the pictures of the customers;
 - ```datasource.startup.adminUser.*``` specify the parameters for the creation of an admin user just after the application boot. This is intended as a first run utility that allows to create a first admin user with which perform the initial setup of the application.
 
 ## Data model
