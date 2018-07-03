@@ -7,8 +7,6 @@ import crm.service.restapi.model.Picture;
 import crm.service.restapi.service.customer.CustomerService;
 import crm.service.restapi.service.validation.ParametersValidatorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -75,16 +73,9 @@ public class CustomerController {
     }
 
     @GetMapping(value = "/findPicture/{id}")
-    public @ResponseBody
-    ResponseEntity<byte[]> getCustomerPicture(
-            @PathVariable(value = "id") final Long customerId) throws IOException {
+    public Picture getCustomerPicture(@PathVariable(value = "id") final Long customerId) {
 
-        final Picture picture = customerService.findPicture(customerId);
-
-        final MediaType mediaType = MediaType.valueOf(picture.getMediaType());
-        //final byte[] content = picture.getData();
-
-        return ResponseEntity.ok().contentType(mediaType).body(new byte[]{} /*content*/);
+        return customerService.findPicture(customerId);
     }
 
     @DeleteMapping("/delete/{id}")
