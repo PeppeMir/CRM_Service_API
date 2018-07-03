@@ -98,6 +98,18 @@ public class CustomerServiceImpl implements CustomerService {
             customer.setSurname(customerUpdates.getSurname());
         }
 
+        if (!StringUtils.isEmpty(customerUpdates.getCity())) {
+            customer.setCity(customerUpdates.getCity());
+        }
+
+        if (!StringUtils.isEmpty(customerUpdates.getAddress())) {
+            customer.setAddress(customerUpdates.getAddress());
+        }
+
+        if (customerUpdates.getZipCode() != null) {
+            customer.setZipCode(customerUpdates.getZipCode());
+        }
+
         logger.info("Saving updated customer {}", customer);
 
         customerRepository.save(customer);

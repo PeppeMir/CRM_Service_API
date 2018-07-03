@@ -11,7 +11,7 @@
 			"name": "CREATE BRIAN",
 			"request": {
 				"url": {
-					"raw": "http://localhost:8080/customer/create?access_token=69c8fa8b-30f7-4320-ac1d-62b09382f1c0",
+					"raw": "http://localhost:8080/customer/create?access_token=8237cd3b-069f-4e8f-a33a-01e253062b52",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -24,7 +24,7 @@
 					"query": [
 						{
 							"key": "access_token",
-							"value": "69c8fa8b-30f7-4320-ac1d-62b09382f1c0",
+							"value": "8237cd3b-069f-4e8f-a33a-01e253062b52",
 							"equals": true,
 							"description": ""
 						}
@@ -41,7 +41,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{ \"name\" : \"Brian\", \"surname\" : \"Epstein\" }"
+					"raw": "{ \"name\" : \"Brian\", \"surname\" : \"Epstein\", \"city\" : \"Boston\", \"address\" : \"Boston road, 87\", \"zipCode\" : \"02101\" }"
 				},
 				"description": null
 			},
@@ -51,7 +51,7 @@
 			"name": "CREATE GEOFF",
 			"request": {
 				"url": {
-					"raw": "http://localhost:8080/customer/create?access_token=915369cd-4eb7-451a-a0fb-03fb9b577cd9",
+					"raw": "http://localhost:8080/customer/create?access_token=8237cd3b-069f-4e8f-a33a-01e253062b52",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -64,7 +64,7 @@
 					"query": [
 						{
 							"key": "access_token",
-							"value": "915369cd-4eb7-451a-a0fb-03fb9b577cd9",
+							"value": "8237cd3b-069f-4e8f-a33a-01e253062b52",
 							"equals": true,
 							"description": ""
 						}
@@ -91,7 +91,7 @@
 			"name": "GET ALL",
 			"request": {
 				"url": {
-					"raw": "http://localhost:8080/customer/getAll?access_token=46fe14d7-6c08-4284-b17d-36f8a761b773",
+					"raw": "http://localhost:8080/customer/getAll?access_token=8237cd3b-069f-4e8f-a33a-01e253062b52",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -104,7 +104,7 @@
 					"query": [
 						{
 							"key": "access_token",
-							"value": "46fe14d7-6c08-4284-b17d-36f8a761b773",
+							"value": "8237cd3b-069f-4e8f-a33a-01e253062b52",
 							"equals": true,
 							"description": ""
 						}
@@ -154,7 +154,7 @@
 			"name": "UPLOAD PICTURE",
 			"request": {
 				"url": {
-					"raw": "http://localhost:8080/customer/uploadPicture/3?access_token=46fe14d7-6c08-4284-b17d-36f8a761b773",
+					"raw": "http://localhost:8080/customer/uploadPicture/1?access_token=e9983654-a556-4123-ab6d-c9709bca9543",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -163,12 +163,12 @@
 					"path": [
 						"customer",
 						"uploadPicture",
-						"3"
+						"1"
 					],
 					"query": [
 						{
 							"key": "access_token",
-							"value": "46fe14d7-6c08-4284-b17d-36f8a761b773",
+							"value": "e9983654-a556-4123-ab6d-c9709bca9543",
 							"equals": true,
 							"description": ""
 						}
@@ -184,7 +184,7 @@
 							"key": "file",
 							"description": "",
 							"type": "file",
-							"src": "scarlett1.jpg"
+							"src": "scarlett3.png"
 						}
 					]
 				},
@@ -238,7 +238,7 @@
 			"name": "UPDATE",
 			"request": {
 				"url": {
-					"raw": "http://localhost:8080/customer/update/3?access_token=46fe14d7-6c08-4284-b17d-36f8a761b773",
+					"raw": "http://localhost:8080/customer/update/2?access_token=8237cd3b-069f-4e8f-a33a-01e253062b52",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -247,12 +247,12 @@
 					"path": [
 						"customer",
 						"update",
-						"3"
+						"2"
 					],
 					"query": [
 						{
 							"key": "access_token",
-							"value": "46fe14d7-6c08-4284-b17d-36f8a761b773",
+							"value": "8237cd3b-069f-4e8f-a33a-01e253062b52",
 							"equals": true,
 							"description": ""
 						}
@@ -269,7 +269,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{ \"name\" : \"Emma\", \"surname\" : \"Emmerich\" }"
+					"raw": "{ \"city\" : \"New York\", \"address\" : \"Broadway\", \"zipCode\" : \"10001\" }"
 				},
 				"description": ""
 			},

@@ -25,6 +25,15 @@ public class Customer {
 	@NotBlank
 	private String surname;
 
+	@Column(name = "city")
+	private String city;
+
+	@Column(name = "address")
+	private String address;
+
+    @Column(name = "zipCode")
+    private Integer zipCode;
+
 	@OneToOne(cascade =  CascadeType.ALL)
 	@JoinColumn(name = "picture_id")
 	private Picture picture;
@@ -65,7 +74,31 @@ public class Customer {
 		this.surname = surname;
 	}
 
-	public Picture getPicture() {
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Integer getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(Integer zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public Picture getPicture() {
 		return picture;
 	}
 
