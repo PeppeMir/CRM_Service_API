@@ -15,6 +15,7 @@ If you want deploy and run the project on your local machine, continue reading t
 
 - Java 8
 - Maven 3.x
+- an AWS account with [Amazon S3](https://aws.amazon.com/s3/) service available. It is important to set the ```amazonws.s3.*``` properties as described in the configuration section.
 
 ### Repository clone
 
@@ -32,7 +33,7 @@ mvn spring-boot:run
 
 ## Configuration
 
-The application, based on Spring-Boot, keeps all the needed configurations in the files ```application.properties``` and ```logback.xml```.
+The application, based on Spring-Boot, keeps all the needed configurations in the files ```logback.xml``` and ```application.properties```. All the rest have already been managed by using spring annotations.
 
 ### logback.xml
 
@@ -55,6 +56,30 @@ In particular:
 - ```amazonws.s3.*``` specify the S3-Amazon Web Service in which perform the storage of the pictures of the customers;
 - ```datasource.startup.adminUser.*``` specify the parameters for the creation of an admin user just after the application boot. This is intended as a first run utility that allows to create a first admin user with which perform the initial setup of the application.
 
+In particular. here there are some example of configuration:
+
+#### for the datasource:
+```
+spring.datasource.url = jdbc:mysql://localhost:3306/crm_service?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+spring.datasource.username = root
+spring.datasource.password = root
+spring.datasource.testWhileIdle = true
+spring.datasource.validationQuery = SELECT 1
+
+spring.jpa.show-sql = true
+spring.jpa.hibernate.ddl-auto = create
+spring.jpa.hibernate.naming-strategy = org.hibernate.cfg.ImprovedNamingStrategy
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQL5Dialect
+```
+
+#### for Amazon S3:
+```
+amazonws.s3.endpointRegion = eu-west-1
+amazonws.s3.accessKey = [your access key]
+amazonws.s3.secretKey = [your secret key]
+amazonws.s3.bucketName = crmservice-bucket
+```
+
 ## Data model
 
 ![ScreenShot](https://github.com/PeppeMir/CRM_Service_API/blob/master/files/images/db-model.png)
@@ -74,6 +99,7 @@ For the very first run, it is important to run the application with the setting 
 | POST   | /customer/uploadPicture/{id} | Upload a picture for the customer with the specified id |
 | GET    | /customer/findPicture/{id}   | Get the picture for the customer with the specified id |
 | DELETE | /customer/delete/{id}        | Delete the customer with the specified id |
+
 
 | Method | Url | Decription |
 | ------ | --- | ---------- |
@@ -146,6 +172,17 @@ until its expiration, which will require the user to authenticate again
     "error_description": "Access token expired: 1dcbf2a1-5739-4e9e-b0f6-429a743cfebe"
 }
 ```
+
+The process is similar to the one implemented in [Google sign-in](https://developers.google.com/identity/protocols/OAuth2) or [Facebook login flow](https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow/), when from a particular website, we click on **Login with Facebook** or **Login with Google**.
+
+![ScreenShot](https://developers.google.com/accounts/images/webflow.png)
+
+Of course, for sake of simplicity, the following assumptions have been followed:
+
+- both the authentication and authorization pages returned by our application are the default ones (ugly, no style);
+- the check of the parameters like clientid, secret, etc is performed in memory;
+- the token storage is maintained in memory;
+- the refresh of the token has not been implemented (once expired, an user needs to be authorized again).
 
 ## Example of requests
 
