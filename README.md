@@ -15,7 +15,7 @@ If you want deploy and run the project on your local machine, continue reading t
 
 - Java 8
 - Maven 3.x
-- an AWS account with [Amazon S3](https://aws.amazon.com/s3/) service availabl. It is important to set the ```amazonws.s3.*``` properties as described in the configuration section.
+- an AWS account with [Amazon S3](https://aws.amazon.com/s3/) service available. It is important to set the ```amazonws.s3.*``` properties as described in the configuration section.
 
 ### Repository clone
 
@@ -33,7 +33,7 @@ mvn spring-boot:run
 
 ## Configuration
 
-The application, based on Spring-Boot, keeps all the needed configurations in the files ```application.properties``` and ```logback.xml```.
+The application, based on Spring-Boot, keeps all the needed configurations in the files ```logback.xml``` and ```application.properties```. All the rest have already been managed by using spring annotations.
 
 ### logback.xml
 
@@ -171,6 +171,17 @@ until its expiration, which will require the user to authenticate again
     "error_description": "Access token expired: 1dcbf2a1-5739-4e9e-b0f6-429a743cfebe"
 }
 ```
+
+The process is similar to the one implemented in [Google sign-in](https://developers.google.com/identity/protocols/OAuth2), when from a particular website, we click on **Login with Facebbok** or **Login with Google**.
+
+![ScreenShot](https://developers.google.com/accounts/images/webflow.png)
+
+Of course, for sake of simplicity, the following assumptions have been followed:
+
+- both the authentication and authorization pages returned by our application are the default ones (ugly, no style);
+- the check of the parameters like clientid, secret, etc is performed in memory;
+- the token storage is maintained in memory;
+- the refresh of the token has not been implemented (once expired, an user needs to be authorized again).
 
 ## Example of requests
 
