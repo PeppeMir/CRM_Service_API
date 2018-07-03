@@ -15,6 +15,7 @@ If you want deploy and run the project on your local machine, continue reading t
 
 - Java 8
 - Maven 3.x
+- an AWS account with [Amazon S3](https://aws.amazon.com/s3/) service availabl. It is important to set the ```amazonws.s3.*``` properties as described in the configuration section.
 
 ### Repository clone
 
@@ -54,6 +55,30 @@ In particular:
 - ```spring.jpa.*``` specify the JPA / Hibernate configuration, i.e. db schema operations (create-drop, update, ...), SQL dialect, etc.;
 - ```amazonws.s3.*``` specify the S3-Amazon Web Service in which perform the storage of the pictures of the customers;
 - ```datasource.startup.adminUser.*``` specify the parameters for the creation of an admin user just after the application boot. This is intended as a first run utility that allows to create a first admin user with which perform the initial setup of the application.
+
+In particular. here there are some example of configuration  and S3:
+
+#### for the datasource:
+```
+spring.datasource.url = jdbc:mysql://localhost:3306/crm_service?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+spring.datasource.username = root
+spring.datasource.password = root
+spring.datasource.testWhileIdle = true
+spring.datasource.validationQuery = SELECT 1
+
+spring.jpa.show-sql = true
+spring.jpa.hibernate.ddl-auto = create
+spring.jpa.hibernate.naming-strategy = org.hibernate.cfg.ImprovedNamingStrategy
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQL5Dialect
+```
+
+#### for Amazon S3:
+```
+amazonws.s3.endpointRegion = eu-west-1
+amazonws.s3.accessKey = [your access key]
+amazonws.s3.secretKey = [your secret key]
+amazonws.s3.bucketName = crmservice-bucket
+```
 
 ## Data model
 
